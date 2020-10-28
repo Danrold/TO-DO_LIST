@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
+/**
+ * Java-док
+ */
 @RestController
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ListController {
@@ -17,10 +20,15 @@ public class ListController {
         this.listRepository = listRepository;
     }
 
+    // TODO: ресты не долждны ничего знать об обьектной модели, они оперируют DTO (можно в гугле спросить DTO зачем нужны)
+    //  также они не должны ничего знать о репозиториях, все действия долны быть вынесены в сервисы через интерфейсы,
+    //  чтоб мы могли подменить реализацию
+
     @GetMapping("/getlist")
     public ResponseEntity<java.util.List<List>> allList() {
         return ResponseEntity.ok(listRepository.findAll());
     }
+    // TODO: не хватет сортировки, фильтрации и пагинации
 
 
     @PostMapping("/list")
@@ -35,5 +43,7 @@ public class ListController {
 
         return ResponseEntity.ok(listRepository.save(list));
     }
+
+    // TODO: не хватает методов, например удалить список или изменит данные списка
 
 }

@@ -30,3 +30,5 @@ databaseChangeLog:
                   type: date
                   constraints:
                     nullable: false
+
+#TODO: нужна миграция на ещё одну таблицу
