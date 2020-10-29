@@ -1,25 +1,44 @@
-package com.thebest.todolist;
+package com.thebest.todolist.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+@Entity
+@Table(name = "task")
 public class Task implements Serializable {
 
+    @Id
+    @Column(name = "id")
     private UUID id;
 
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Column(name = "create_date", nullable = false)
     private Date createDate;
 
+    @Column(name = "change_date", nullable = false)
     private Date changeDate;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "is_complete", nullable = false)
     private Boolean isComplete;
 
+    @Column(name = "priority", nullable = false)
     private int priority;
 
+    @Column(name = "list_id", nullable = false)
+    private UUID listID;
+
     public Task() {
+        id = UUID.randomUUID();
+        createDate = new Date();
+        changeDate = new Date();
+        isComplete = false;
+        priority = 0;
     }
 
     public UUID getId() {
@@ -76,5 +95,13 @@ public class Task implements Serializable {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public UUID getListID() {
+        return listID;
+    }
+
+    public void setListID(UUID listID) {
+        this.listID = listID;
     }
 }
