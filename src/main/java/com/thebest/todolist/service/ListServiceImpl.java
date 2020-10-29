@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
+/**
+ * Имплементация интерфейса ListService, описывающая логику работы с listRepository
+ */
+
 @Service
 public class ListServiceImpl implements ListService{
 

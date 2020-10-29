@@ -5,6 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.*;
 
+/**
+ * Репозиторий с помощью которого осуществляется операции доступа к таблице task в базе данных
+ */
+
 public interface TaskRepository extends JpaRepository<Task, UUID> {
 
     List<Task> findByListID(UUID listID);

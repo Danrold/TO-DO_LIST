@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 /**
- * Java-док
+ * Репозиторий с помощью которого осуществляется операции доступа к таблице list в базе данных
  */
 public interface ListRepository extends JpaRepository<List, UUID> {
 

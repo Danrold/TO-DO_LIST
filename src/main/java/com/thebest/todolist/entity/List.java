@@ -6,7 +6,8 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Java-doc к классу и свойствам
+ * Класс-сущность позволяющий работать с объектом список списков
+ * соответствующим таблице list в базе данных
  */
 @Entity
 @Table(name = "list")

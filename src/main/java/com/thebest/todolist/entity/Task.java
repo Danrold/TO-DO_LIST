@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Класс-сущность позволяющий работать с объектом задача
+ * соответствующим таблице task в базе данных
+ */
+
 @Entity
 @Table(name = "task")
 public class Task implements Serializable {

@@ -2,6 +2,9 @@ package com.thebest.todolist.service;
 
 import java.util.*;
 
+/**
+ * Интерфес, описывающий необходимые методы для работы с объектом list в базе данных
+ */
 public interface ListService {
 
     List<com.thebest.todolist.entity.List> findAll();

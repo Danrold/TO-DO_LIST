@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
+/**
+ * Имплементация интерфейса TaskService, описывающая логику работы с taskRepository
+ */
 @Service
 public class TaskServiceImpl implements TaskService {
 
@@ -30,8 +33,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public UUID update(Task task) {
-        return null;
+    public UUID update(UUID taskId, String newName, String description, Integer priority) {
+        Task task = taskRepository.findById(taskId).orElseThrow(()->new EntityNotFoundException());
+        if(newName!=null) task.setName(newName);
+        if(description!=null) task.setDescription(description);
+        if(priority!=null && priority<=10 && priority>=0) task.setPriority(priority);
+        task.setChangeDate(new Date());
+        taskRepository.save(task);
+        return task.getId();
     }
 
     @Override
