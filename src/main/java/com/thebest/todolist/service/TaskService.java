@@ -1,6 +1,8 @@
 package com.thebest.todolist.service;
 
 import com.thebest.todolist.entity.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -10,6 +12,8 @@ import java.util.*;
 public interface TaskService {
 
     List<Task> findAll(UUID listID);
+
+    Page<Task> getPage(UUID listID, Integer pageNumber, Integer size, String sortBy);
 
     UUID saveOne(Task task);
 

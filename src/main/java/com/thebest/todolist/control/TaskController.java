@@ -4,6 +4,7 @@ import com.thebest.todolist.entity.Task;
 import com.thebest.todolist.service.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +26,19 @@ public class TaskController {
     }
 
     @GetMapping("/get")
-    @ApiOperation(value = "Отображение задач выбранного списка",
-            notes = "Метод должен принимать в качестве параметров условия фильтрации и сортировки")
+    @ApiOperation(value = "Отображение всех задач выбранного списка",
+            notes = "Метод принимает в качестве параметра ID списка и возвращает все его существующие задачи")
     public ResponseEntity<List<Task>> getAll(@RequestParam UUID listID)
     {
         return ResponseEntity.ok(taskService.findAll(listID));
+    }
+
+    @GetMapping("/page")
+    @ApiOperation(value = "Постраничное отображение задач выбранного списка",
+            notes = "Метод принимает в качестве параметров ID списка, а так же параметры для постраничного вывода и сортировки: " +
+                    "номер страницы, количество задач на странице, название поля для сортировки")
+    public ResponseEntity<Page<Task>> getPage(@RequestParam UUID listID, Integer pageNumber, Integer size, String sortBy){
+        return ResponseEntity.ok(taskService.getPage(listID, pageNumber, size, sortBy));
     }
 
     @PostMapping("/add")
@@ -37,7 +46,7 @@ public class TaskController {
             notes = "Метод проверяет существование списка с заданным ID, если он существует, то в него добавляется задача с указанным названием и параметрами по умолчанию")
     public ResponseEntity<UUID> addTask(@RequestParam String name, @RequestParam UUID listID)
     {
-        if(name.isEmpty()||name==null)
+        if(name.isEmpty())
             return new ResponseEntity("incorrect name", HttpStatus.NOT_ACCEPTABLE);
 
         Task task = new Task();

@@ -1,5 +1,7 @@
 package com.thebest.todolist.service;
 
+import org.springframework.data.domain.*;
+
 import java.util.*;
 
 /**
@@ -8,6 +10,8 @@ import java.util.*;
 public interface ListService {
 
     List<com.thebest.todolist.entity.List> findAll();
+
+    Page<com.thebest.todolist.entity.List> getPage(Integer pageNumber, Integer size, String sortBy);
 
     UUID saveOne(com.thebest.todolist.entity.List list);
 

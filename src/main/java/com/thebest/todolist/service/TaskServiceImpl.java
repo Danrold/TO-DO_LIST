@@ -1,11 +1,14 @@
 package com.thebest.todolist.service;
 
+import com.google.common.collect.Lists;
 import com.thebest.todolist.entity.Task;
 import com.thebest.todolist.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -15,6 +18,7 @@ import java.util.*;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final int defaultSize = 2;
 
     @Autowired
     public TaskServiceImpl(TaskRepository taskRepository) {
@@ -24,6 +28,31 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAll(UUID listID) {
         return taskRepository.findByListID(listID);
+    }
+
+    @Override
+    public Page<Task> getPage(UUID listID, Integer pageNumber, Integer size, String sortBy) {
+
+        if(pageNumber == null)
+            pageNumber = 0;
+        if (size == null)
+            size = defaultSize;
+
+        Pageable page;
+        List<Field> columnName = Lists.newArrayList(Task.class.getDeclaredFields());
+
+        if(sortBy != null){
+            for (Field item:columnName) {
+                if(sortBy.equals(item.getName())){
+                    page = PageRequest.of(pageNumber, size, Sort.by(sortBy));
+                    return taskRepository.findByListID(listID, page);
+                }
+            }
+        }
+
+        page = PageRequest.of(pageNumber,size);
+
+        return taskRepository.findByListID(listID, page);
     }
 
     @Override
